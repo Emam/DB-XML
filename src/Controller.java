@@ -2,7 +2,7 @@
 public class Controller {
 
 	private String path;
-	private SQLStatement SQL;
+	private Query SQL;
 	private String currentUser;
 	public Controller(String pathP){
 		path=pathP;
@@ -30,6 +30,7 @@ public class Controller {
 	public Object[][] sendSQL(String sql){
 		if(currentUser!=null){
 			//create statement
+			SQL.setSQL(sql);
 			//wait for its result
 		}
 		return null;

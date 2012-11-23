@@ -1,11 +1,11 @@
 public class Query {
 	private String[] query;
+	public String [][] table = null;
+	private String path;
 
-//	public Query(String queryP) {
-//		// first you have to check the validity of user input
-//		this.query = queryP.split("[ (),]+");
-//		mange(this.query);
-//	}
+	public Query(String path) {
+		this.path = path;
+	}
 	
 	public boolean setSQL(String queryP){
 		query = queryP.split("[ (),]+");
@@ -45,7 +45,7 @@ public class Query {
 	private void create(String[] query) {
 		String[] columns = getCreateColumns(query);
 		String[] tyeps = getCreateTypes(query);
-		// table.create(query[2],columns,types);
+		// table = table.create(cretPath(query[2]),columns,types);
 	}
 
 	private String[] getCreateColumns(String[] query) {
@@ -66,12 +66,12 @@ public class Query {
 
 	private void delete(String[] query) {
 		if (query[1].matches("*")) {
-			// table.delete(query[3]);
+			//table =  table.delete(cretPath(query[2]));
 		} else {
 			String[] columns = getDeleteColumns(query, 4);
 			String[] values = getDeleteValues(query, 4);
 
-			// table.delete(query[2],columns,values);
+			// table = table.delete(cretPath(query[2]),columns,values);
 		}
 
 	}
@@ -100,7 +100,7 @@ public class Query {
 			columns[i] = col[i][0];
 			values[i] = col[i][1];
 		}
-		// table.insert(query[2], columns,values);
+		// table = table.insert(cretPath(query[2]), columns,values);
 
 	}
 
@@ -124,13 +124,13 @@ public class Query {
 		if (check == 0) {
 			String[] columns = getUpdateColumns(query);
 			String[] values = getUpdateValues(query);
-			// table.update(query[1], columns, values);
+			// table = table.update(cretPath(query[1]), columns, values);
 		} else {
 			String[] where_columns = getUpdate_WhereColumns(query, check);
 			String[] where_values = getUpdate_WhereValues(query, check);
 			String[] columns = getUpdate_columns(query, check);
 			String[] values = getUpdate_values(query, check);
-			// table.update(query[1],
+			// table = table.update(cretPath(query[1]),
 			// columns,values,where_columns,where_values);
 		}
 	}
@@ -193,30 +193,33 @@ public class Query {
 
 	private void select(String[] query) {
 		if (query.length == 4 && query[1].matches("*")) {
-			// table.select(query[3]);
+			// table = table.select(cretPath(query[3]));
 		} else if (query[1].matches("*")) {
 			String[] columns = getDeleteColumns(query, 5);
 			String[] values = getDeleteValues(query, 5);
-			// table.select(query[3],columns, values);
+			// table = table.select(cretPath(query[3]),columns, values);
 		} else {
 			int where = checkQuery(query);
 			if (where != 0) {
 				String[] where_columns = getUpdate_WhereColumns(query, where);
 				String[] where_values = getUpdate_WhereValues(query, where);
 				String[] columns = getSelectColumns(query);
-				// table.select(query[columns.length+2], columns,
+				//table =  table.select(cretPath(query[columns.length+2]), columns,
 				// where_columns,where_values);
 			} else {
 				String[] columns = getInsert_Columns(query);
-				// table.select();
+				// table = table.select(cretPath(query[columns.length+2]),columns);
 			}
 		}
 
 	}
 
-	private String[] getInsert_Columns(String[] query2) {
-		// TODO Auto-generated method stub
-		return null;
+	private String[] getInsert_Columns(String[] query) {
+		String [] columns = new String[query.length - 3];
+		for (int i = 1; !query[i].matches("FROM"); i++) {
+			columns[i-1] = query[i];
+		}
+		return columns;
 	}
 
 	private String[] getSelectColumns(String[] query) {
@@ -232,5 +235,8 @@ public class Query {
 		}
 		return columns;
 	}
-
+	
+	private String cretPath(String tableName){
+		return path + tableName+".xml";
+	}
 }
