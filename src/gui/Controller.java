@@ -1,11 +1,32 @@
 package gui;
 
-public class Controller {
+import java.sql.SQLException;
 
+public class Controller {
+	
 	private String path;
 	private Query SQL;
 	private String currentUser;
-	public Controller(String pathP){
+	private static Controller controller;
+	
+	public static synchronized Controller getInstance() throws SQLException {
+		if (controller == null)
+			throw new SQLException();
+		else {
+			return controller;
+		}
+	}
+	
+	public static synchronized Controller getInstance(String url) {
+		if (controller == null)
+			return new Controller(url);
+		else {
+			controller.path = url;
+			return controller;
+		}
+	}
+	
+	private Controller(String pathP){
 		path=pathP;
 	}
 	
