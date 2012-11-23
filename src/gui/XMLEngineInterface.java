@@ -1,3 +1,4 @@
+package gui;
 
 	public interface XMLEngineInterface {
 		public String[][] createTable(String tableName, String[] cols , String[] Types);	//To create the dataBase Table
