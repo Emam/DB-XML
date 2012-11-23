@@ -44,17 +44,21 @@ public class Controller {
 		return false;
 	}
 	
-	public boolean logOut(String user){
+	public boolean logOut(){
 		currentUser=null;
 		return false;
 	}
 	
-	public Object[][] sendSQL(String sql){
+	public String[][] sendSQL(String sql){
 		if(currentUser!=null){
 			//create statement
 			SQL.setSQL(sql);
 			//wait for its result
 		}
 		return null;
+	}
+	
+	public void close() {
+		controller = null;
 	}
 }
