@@ -17,6 +17,7 @@ public class Controller {
 	
 	public boolean newUser(String user,String pass){
 		//select user
+		//create folder of user
 		//new user & pass
 		return false;
 	}
